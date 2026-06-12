@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
-import socket
+import os
 from io import BytesIO
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -208,14 +208,6 @@ Vitals are stable in this demo report. Continue regular monitoring and follow up
     abort(404)
 
 
-def find_free_port(start: int = 5000) -> int:
-    for port in range(start, start + 50):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            if sock.connect_ex(("127.0.0.1", port)) != 0:
-                return port
-    raise RuntimeError("No free local port found between 5000 and 5049.")
-
-
 @app.route("/")
 def index():
     return render_template("index.html", stats=STATS, doctors=DOCTORS, appointments=APPOINTMENTS)
@@ -360,8 +352,11 @@ def analytics():
     return render_template("admin/analytics.html", stats=STATS, bed_data=bed_data)
 
 
+init_db()
+
+
 if __name__ == "__main__":
-    init_db()
-    port = find_free_port()
-    print(f"AI Healthcare System running at http://127.0.0.1:{port}", flush=True)
-    app.run(host="127.0.0.1", port=port, debug=True, use_reloader=False)
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    print(f"AI Healthcare System running on 0.0.0.0:{port}", flush=True)
+    app.run(host="0.0.0.0", port=port, debug=debug, use_reloader=False)
