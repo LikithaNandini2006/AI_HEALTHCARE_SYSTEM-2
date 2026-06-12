@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% set title = "Login" %}
+{% block content %}
+<section class="auth">
+  <form method="post">
+    <h1>Login</h1>
+    <div class="role-select">
+      <label class="role-card doctor-role">
+        <input type="radio" name="role" value="doctor" required>
+        <span>Doctor</span>
+      </label>
+      <label class="role-card patient-role">
+        <input type="radio" name="role" value="patient" required>
+        <span>Patient</span>
+      </label>
+      <label class="role-card admin-role">
+        <input type="radio" name="role" value="admin" required checked>
+        <span>Admin</span>
+      </label>
+    </div>
+    <label>Email<input name="email" type="email" placeholder="Enter any email" required></label>
+    <label>Password<input name="password" type="password" placeholder="Enter any password" required></label>
+    <button class="primary" type="submit">Login</button>
+  </form>
+</section>
+{% endblock %}

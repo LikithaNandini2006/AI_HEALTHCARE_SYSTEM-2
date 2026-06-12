@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% set title = "Appointments" %}
+{% block content %}
+<section class="page-head">
+  <h1>Appointments</h1>
+  <p>Schedule patient appointments with doctors and departments.</p>
+</section>
+<section class="two-col">
+  <form method="post">
+    <label>Patient Name<input name="patient_name" required></label>
+    <label>Doctor
+      <select name="doctor_name">
+        {% for doctor in doctors %}
+          <option>{{ doctor.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Department<input name="department" value="General Medicine" required></label>
+    <label>Date<input name="appointment_date" type="date" required></label>
+    <label>Time<input name="appointment_time" type="time" required></label>
+    <label>Reason<textarea name="reason" rows="4" required></textarea></label>
+    <button class="primary" type="submit">Book Appointment</button>
+  </form>
+  <div>
+    <h2>Recent Bookings</h2>
+    <table>
+      <thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th></tr></thead>
+      <tbody>
+        {% for item in appointments %}
+          <tr><td>{{ item.patient_name }}</td><td>{{ item.doctor_name }}</td><td>{{ item.appointment_date }}</td><td>{{ item.appointment_time }}</td></tr>
+        {% else %}
+          <tr><td colspan="4">No bookings yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

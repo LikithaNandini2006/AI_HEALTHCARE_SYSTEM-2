@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% set title = "Reports" %}
+{% block content %}
+<section class="page-head">
+  <h1>Reports and Disease Prediction</h1>
+  <p>Generate a quick risk estimate and download patient, lab, and appointment reports.</p>
+</section>
+<section class="two-col">
+  <form method="post" action="{{ url_for('prediction') }}">
+    <label>Age<input name="age" type="number" min="1" max="120" required></label>
+    <label>Glucose<input name="glucose" type="number" min="40" max="400" required></label>
+    <label>Blood Pressure<input name="bp" type="number" min="50" max="240" required></label>
+    <fieldset>
+      <legend>Symptoms</legend>
+      <label class="check"><input type="checkbox" name="symptoms" value="fatigue"> Fatigue</label>
+      <label class="check"><input type="checkbox" name="symptoms" value="breathless"> Breathlessness</label>
+      <label class="check"><input type="checkbox" name="symptoms" value="pain"> Chest pain</label>
+    </fieldset>
+    <button class="primary" type="submit">Predict</button>
+  </form>
+  <div class="result">
+    <h2>Result</h2>
+    {% if result %}
+      <strong>{{ result.label }} - {{ result.score }}%</strong>
+      <ul>
+        {% for reason in result.reasons %}
+          <li>{{ reason }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Prediction output will appear after submitting the form.</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="reports-section">
+  <div class="section-title">
+    <h2>Download Reports</h2>
+    <p>Click download to save the report file to your system.</p>
+  </div>
+  <div class="report-grid">
+    {% for report in reports %}
+      <article class="report-card">
+        <div>
+          <span>{{ report.type }}</span>
+          <h3>{{ report.title }}</h3>
+          <p>{{ report.description }}</p>
+        </div>
+        <a class="button primary" href="{{ url_for('download_report', report_id=report.id) }}">Download</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

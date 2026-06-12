@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set title = "Admin Dashboard" %}
+{% block content %}
+<section class="page-head">
+  <h1>Admin Dashboard</h1>
+  <p>Track beds, staff, resources, analytics, and hospital operations.</p>
+</section>
+<section class="stats-grid">
+  <article><span>Patients</span><strong>{{ stats.patients }}</strong></article>
+  <article><span>Doctors</span><strong>{{ stats.doctors }}</strong></article>
+  <article><span>Free Beds</span><strong>{{ stats.beds_available }}</strong></article>
+  <article><span>Visits Today</span><strong>{{ stats.appointments_today }}</strong></article>
+</section>
+<section class="two-col">
+  <div>
+    <h2>Staff</h2>
+    <div class="list">
+      {% for doctor in doctors %}
+        <article><strong>{{ doctor.name }}</strong><span>{{ doctor.department }} - {{ doctor.status }}</span></article>
+      {% endfor %}
+    </div>
+  </div>
+  <div>
+    <h2>Management</h2>
+    <div class="quick-grid">
+      <a href="{{ url_for('analytics') }}">Analytics</a>
+      <a href="{{ url_for('appointments') }}">Appointments</a>
+      <a href="{{ url_for('chatbot') }}">Chatbot</a>
+      <a href="{{ url_for('register') }}">Add User</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

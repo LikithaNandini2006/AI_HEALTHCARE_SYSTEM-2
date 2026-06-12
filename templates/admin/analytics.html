@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set title = "Analytics" %}
+{% block content %}
+<section class="page-head">
+  <h1>Analytics</h1>
+  <p>Hospital resource and activity overview.</p>
+</section>
+<section class="stats-grid">
+  {% for name, value in bed_data.items() %}
+    <article><span>{{ name }} Beds</span><strong>{{ value }}</strong></article>
+  {% endfor %}
+  <article><span>Total Patients</span><strong>{{ stats.patients }}</strong></article>
+</section>
+<section>
+  <h2>Resource Forecast</h2>
+  <div class="bars">
+    <div style="--w:72%"><span>Medicine Stock</span></div>
+    <div style="--w:48%"><span>ICU Usage</span></div>
+    <div style="--w:64%"><span>Staff Load</span></div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% set title = "AI Healthcare Dashboard" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">Prediction and Resource Management</p>
+    <h1>AI Healthcare System</h1>
+    <p>Manage patients, appointments, doctors, reports, bed availability, and hospital analytics from one local web app.</p>
+    <div class="actions">
+      <a class="button primary" href="{{ url_for('login') }}">Login</a>
+      <a class="button" href="{{ url_for('prediction') }}">Try Prediction</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <span>Live Hospital Snapshot</span>
+    <strong>{{ stats.appointments_today }}</strong>
+    <small>appointments today</small>
+  </div>
+</section>
+
+<section class="stats-grid">
+  <article><span>Patients</span><strong>{{ stats.patients }}</strong></article>
+  <article><span>Doctors</span><strong>{{ stats.doctors }}</strong></article>
+  <article><span>Beds Available</span><strong>{{ stats.beds_available }}</strong></article>
+  <article><span>Appointments</span><strong>{{ stats.appointments_today }}</strong></article>
+</section>
+
+<section class="two-col">
+  <div>
+    <h2>Today Appointments</h2>
+    <table>
+      <thead><tr><th>Patient</th><th>Doctor</th><th>Time</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for item in appointments %}
+          <tr><td>{{ item.patient }}</td><td>{{ item.doctor }}</td><td>{{ item.time }}</td><td>{{ item.status }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2>Doctors</h2>
+    <div class="list">
+      {% for doctor in doctors %}
+        <article>
+          <strong>{{ doctor.name }}</strong>
+          <span>{{ doctor.department }} - {{ doctor.status }}</span>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

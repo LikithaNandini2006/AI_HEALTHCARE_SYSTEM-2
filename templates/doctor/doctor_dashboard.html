@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set title = "Doctor Dashboard" %}
+{% block content %}
+<section class="page-head">
+  <h1>Doctor Dashboard</h1>
+  <p>Review assigned patients, treatment plans, and appointment flow.</p>
+</section>
+<section class="stats-grid">
+  <article><span>Patients Today</span><strong>24</strong></article>
+  <article><span>Critical Alerts</span><strong>3</strong></article>
+  <article><span>Reports Pending</span><strong>9</strong></article>
+  <article><span>Available Slots</span><strong>11</strong></article>
+</section>
+<section>
+  <h2>Patient Details</h2>
+  <div class="profile-grid patient-grid">
+    {% for patient in patients %}
+      <article class="profile-card patient-card risk-{{ patient.risk|lower }}">
+        <span>{{ patient.condition }}</span>
+        <h3>{{ patient.name }}</h3>
+        <dl>
+          <div><dt>Age</dt><dd>{{ patient.age }}</dd></div>
+          <div><dt>Risk</dt><dd>{{ patient.risk }}</dd></div>
+          <div><dt>Last Visit</dt><dd>{{ patient.last_visit }}</dd></div>
+        </dl>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+<section>
+  <h2>Queue</h2>
+  <table>
+    <thead><tr><th>Patient</th><th>Doctor</th><th>Time</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for item in appointments %}
+        <tr><td>{{ item.patient }}</td><td>{{ item.doctor }}</td><td>{{ item.time }}</td><td>{{ item.status }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

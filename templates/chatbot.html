@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% set title = "Healthcare Chatbot" %}
+{% block content %}
+<section class="page-head">
+  <h1>Healthcare Chatbot</h1>
+  <p>Ask about symptoms, appointments, sugar levels, reports, and hospital guidance.</p>
+</section>
+<section class="chat-layout">
+  <form method="post">
+    <label>Your message<textarea name="message" rows="5" required>{{ question }}</textarea></label>
+    <button class="primary" type="submit">Ask</button>
+  </form>
+  <div class="answer">
+    <h2>Response</h2>
+    <p>{{ answer or "Your answer will appear here." }}</p>
+  </div>
+</section>
+{% endblock %}
